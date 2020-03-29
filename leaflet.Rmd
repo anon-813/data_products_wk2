@@ -1,0 +1,37 @@
+---
+title: "Leaflet"
+date: "March 29, 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+```
+
+## Overview
+
+This is the week 2 assignment for the Developing Data Products course.   Our task is to create a web page using R Markdown that features a map created with Leaflet. As per the assignment, the webpage contains the date that the document was created and it contains a map created with Leaflet.    
+
+
+## Plot US Landmarks
+
+I made a csv with landmarks and their coordinates.   <b> Step 1 </b> is to read in the CSV.
+
+```{r readcsv}
+# Original list from  https://www.latlong.net/category/monuments-236-46.html
+df <- read.csv("USLandmarks.csv", stringsAsFactors = F)
+str(df)
+```
+
+Next, in <b> Step 2 </b> we'll plot these landmarks with leaflet.
+
+```{r leaflet}
+library(leaflet)
+m <- leaflet() %>% addTiles() 
+for (i in 1:nrow(df)) {
+        m <- m %>% addMarkers(lng=df$Longitude[i], lat=df$Latitude[i], popup=df$Place[i])
+}
+m
+```
+
+The data and code for this are stored at https://github.com/anon-813/data_products_wk2.
